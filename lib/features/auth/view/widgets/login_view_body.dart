@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supra_cart_admin/features/home/view/home_view.dart';
 
 import '../../../../core/helper_function/validators.dart';
 import '../../../../core/style/app_colors.dart';
@@ -83,6 +84,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                   LoginButton(
                     loginText: 'Login',
                     onTap: () {
+                      Navigator.pushNamedAndRemoveUntil(context, HomeView.routeName, (route) => false);
                       //cubit.loginButtonPressed();
                     },
                   ),

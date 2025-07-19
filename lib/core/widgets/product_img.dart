@@ -13,10 +13,7 @@ class ProductPicture extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.only(
-        bottomLeft: Radius.circular(10.r),
-        bottomRight: Radius.circular(10.r),
-      ),
+      borderRadius: BorderRadius.all(Radius.circular(10.r)),
       child: CachedImg(
         imgUrl:imgUrl,
         placeHolder: Container(
