@@ -7,6 +7,7 @@ import 'package:supra_cart_admin/core/widgets/custom_text_form.dart';
 import 'package:supra_cart_admin/features/products/view/widget/category_drop_down.dart';
 
 import '../../../core/helper_function/validators.dart';
+import '../../../core/widgets/product_img.dart';
 
 class EditProductView extends StatefulWidget {
   const EditProductView({super.key});
@@ -54,80 +55,114 @@ class _EditProductViewState extends State<EditProductView> {
         child: Form(
           key: editProductFormKey,
           autovalidateMode: autovalidateMode,
-          child: ListView(
-            children: [
-              CustomTextFormField(hintText: 'Product Name',
-              controller:  productNameController,
-                validator: (String? val) {
-                  return FormValidators.validateProductName(val);},
+          child:CustomScrollView(
+            slivers: [
+              SliverToBoxAdapter(
+                child:
+                Column(
+                  children: [
+                    Stack(
+                      clipBehavior: Clip.none,
+                      children: [
+                        ProductPicture(
+                          height: 120.h,
+                          width: 240.w,
+                          imgUrl:
+                          'https://img.freepik.com/free-photo/3d-rendering-cartoon-shopping-cart_23-2151680638.jpg?ga=GA1.1.220289254.1670056954&semt=ais_hybrid&w=740',
+                        ),
+                        Positioned(
+                          bottom: -20.h,
+                          right: 0.w,
+                          child: CircleAvatar(
+                            radius: 22.r,
+                            backgroundColor: Colors.black,
+                            child: IconButton(
+                              icon: Icon(Icons.camera_alt, size: 20.sp, color: Colors.white),
+                              onPressed: () {
+                                // فتح الصور أو الكاميرا لتغيير الصورة
+                              },
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 30.h),
 
-              ),
-              SizedBox(height: 20.h),
-              Row(
-                children: [
-                  Flexible(
-                    child: CustomTextFormField(
-                      hintText: 'Product Price',
-                      keyboardType: TextInputType.number,
-                      controller: productPriceController,
+                    CustomTextFormField(hintText: 'Product Name',
+                      controller:  productNameController,
                       validator: (String? val) {
-                       return FormValidators.validateProductPrice(val);
+                        return FormValidators.validateProductName(val);},
+
+                    ),
+                    SizedBox(height: 20.h),
+                    Row(
+                      children: [
+                        Flexible(
+                          child: CustomTextFormField(
+                            hintText: 'Product Price',
+                            keyboardType: TextInputType.number,
+                            controller: productPriceController,
+                            validator: (String? val) {
+                              return FormValidators.validateProductPrice(val);
+                            },
+                          ),
+                        ),
+                        Spacer(),
+                        Flexible(
+                          child: CustomTextFormField(
+                            hintText: 'Old Price',
+                            keyboardType: TextInputType.number,
+                          ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20.h),
+                    CategoryDropdown(
+                      selectedCategory: selectedCategory,
+                      onChanged: (String? val) {
+                        selectedCategory = val;
+                        setState(() {});
+                      },
+                      validator: (String? val) {
+                        return FormValidators.validateProductCategory(val);
                       },
                     ),
-                  ),
-                  Spacer(),
-                  Flexible(
-                    child: CustomTextFormField(
-                      hintText: 'Old Price',
-                      keyboardType: TextInputType.number,
+                    SizedBox(height: 20.h),
+                    CustomTextFormField(
+                      hintText: 'Product Description',
+                      maxLines: 5,
+                      controller: productDescriptionController,
+                      validator: (String? val) {
+                        return FormValidators.validateProductDescription(val);
+                      },
+                      keyboardType: TextInputType.multiline,
                     ),
-                  ),
-                ],
-              ),
-              SizedBox(height: 20.h),
-              CategoryDropdown(
-                selectedCategory: selectedCategory,
-                onChanged: (String? val) {
-                  selectedCategory = val;
-                  setState(() {});
-                },
-                validator: (String? val) {
-                  return FormValidators.validateProductCategory(val);
-                },
-              ),
-              SizedBox(height: 20.h),
-              CustomTextFormField(
-                hintText: 'Product Description',
-                maxLines: 5,
-                controller: productDescriptionController,
-                validator: (String? val) {
-                  return FormValidators.validateProductDescription(val);
-                },
-                keyboardType: TextInputType.multiline,
-              ),
-              SizedBox(height: 40.h),
-              Center(
-                child: CustomTextButton(
-                  onPressed: () {
-                    if (editProductFormKey.currentState!.validate()) {
-                      // Handle the form submission logic here
-                      // For example, you can call a method to update the product
-                      print('Product updated successfully');
-                      setState(() {
-                        autovalidateMode = AutovalidateMode.disabled;
-                      });
-                    } else {
-                      setState(() {
-                        autovalidateMode = AutovalidateMode.always;
-                      });
-                    }
-                  },
-                  text: 'Apply Changes',
-                  style: textStyle.Bold20.copyWith(color: Colors.white),
+                    SizedBox(height: 40.h),
+                    Center(
+                      child: CustomTextButton(
+                        onPressed: () {
+                          if (editProductFormKey.currentState!.validate()) {
+                            // Handle the form submission logic here
+                            // For example, you can call a method to update the product
+                            print('Product updated successfully');
+                            setState(() {
+                              autovalidateMode = AutovalidateMode.disabled;
+                            });
+                          } else {
+                            setState(() {
+                              autovalidateMode = AutovalidateMode.always;
+                            });
+                          }
+                        },
+                        text: 'Apply Changes',
+                        style: textStyle.Bold20.copyWith(color: Colors.white),
+                      ),
+                    ),
+                  ],
                 ),
               ),
             ],
-          ),
+          )
         ),
       ),
     );
