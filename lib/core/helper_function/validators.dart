@@ -41,4 +41,42 @@ class FormValidators {
     }
     return null;
   }
+  static String? validateProductName(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Product name is required';
+    }
+    if (value.trim().length < 2) {
+      return 'Product name must be at least 2 characters long';
+    }
+    return null;
+  }
+  static String? validateProductPrice(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Product price is required';
+    }
+    final price = double.tryParse(value);
+    if (price == null || price <= 0) {
+      return 'Enter a valid product price greater than 0';
+    }
+    return null;
+  }
+
+  static String? validateProductCategory(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Product category is required';
+    }
+    return null;
+  }
+
+  static String? validateProductDescription(String? value) {
+    if (value == null || value.trim().isEmpty) {
+      return 'Product description is required';
+    }
+    if (value.trim().length < 10) {
+      return 'Product description must be at least 10 characters';
+    }
+    return null;
+  }
+
+
 }

@@ -28,6 +28,8 @@ class HomeViewBody extends StatelessWidget {
               CustomTextButton(text: 'Orders', onPressed: () {}),
               SizedBox(height: 15.h),
               CustomTextButton(text: 'Add Products', onPressed: () {}),
+              SizedBox(height: 15.h),
+              CustomTextButton(text: 'Add An Admin', onPressed: () {}),
             ],
           ),
         ),
