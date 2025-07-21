@@ -19,3 +19,12 @@ const List<String> orderStatusList = [
 ];
 const deliveryInfoTable='delivery_info';
 const String termsUrl = "https://www.termsfeed.com/live/43bf675d-7b68-454a-bf45-7ec1db0cf6a4";
+const List<String> DropDownListList= [
+'Sports',
+'Electronics',
+'Collections',
+'Book',
+'Game',
+'Bikes',
+];
+final List<String> adminRolesList = ['Primary', 'Secondary'];

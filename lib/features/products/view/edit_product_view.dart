@@ -4,9 +4,10 @@ import 'package:supra_cart_admin/core/style/app_text_styles.dart';
 import 'package:supra_cart_admin/core/widgets/custom_app_bar.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_form.dart';
-import 'package:supra_cart_admin/features/products/view/widget/category_drop_down.dart';
+import 'package:supra_cart_admin/features/products/view/widget/drop_down.dart';
 
 import '../../../core/helper_function/validators.dart';
+import '../../../core/utilis/constants.dart';
 import '../../../core/widgets/product_img.dart';
 
 class EditProductView extends StatefulWidget {
@@ -117,8 +118,9 @@ class _EditProductViewState extends State<EditProductView> {
                       ],
                     ),
                     SizedBox(height: 20.h),
-                    CategoryDropdown(
+                    DropDownList(
                       selectedCategory: selectedCategory,
+                      dropDownList:DropDownListList, text: 'Category',
                       onChanged: (String? val) {
                         selectedCategory = val;
                         setState(() {});

@@ -1,22 +1,16 @@
 import 'package:flutter/material.dart';
 
-class CategoryDropdown extends StatelessWidget {
-  final List<String> categories = [
-    'Sports',
-    'Electronics',
-    'Collections',
-    'Book',
-    'Game',
-    'Bikes',
-  ];
+class DropDownList extends StatelessWidget {
 
 
-
-  CategoryDropdown({
+  DropDownList({
     super.key,
     required this.selectedCategory,
-    required this.onChanged,required this.validator,
+    required this.onChanged,required this.validator, required this.dropDownList, required this.text,
   });
+  final List<String> dropDownList;
+  final String text;
+
   final String? selectedCategory;
   final Function(String?) onChanged;
   final String? Function(String?)? validator;
@@ -24,11 +18,11 @@ class CategoryDropdown extends StatelessWidget {
   Widget build(BuildContext context) {
     return DropdownButtonFormField<String>(
       value: selectedCategory,
-      decoration: const InputDecoration(
-        labelText: 'Category',
-        border: OutlineInputBorder(),
+      decoration: InputDecoration(
+        labelText: text,
+        border: const OutlineInputBorder(),
       ),
-      items: categories.map((String category) {
+      items: dropDownList.map((String category) {
         return DropdownMenuItem<String>(
           value: category,
           child: Text(category),

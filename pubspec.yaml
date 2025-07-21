@@ -22,7 +22,7 @@ dependencies:
   dio: ^5.8.0+1
   dartz: ^0.10.1
   skeletonizer: ^1.4.3
-
+  image_picker:
 
 dev_dependencies:
   flutter_test:

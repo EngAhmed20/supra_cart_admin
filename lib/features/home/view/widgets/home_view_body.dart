@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
+import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
 
 import '../../../products/view/product_view.dart';
@@ -32,7 +33,9 @@ class HomeViewBody extends StatelessWidget {
                 Navigator.pushNamed(context, AddProductView.routeName);
               }),
               SizedBox(height: 15.h),
-              CustomTextButton(text: 'Add An Admin', onPressed: () {}),
+              CustomTextButton(text: 'Add An Admin', onPressed: () {
+                Navigator.pushNamed(context, AddAdminView.routeName);
+              }),
             ],
           ),
         ),

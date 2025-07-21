@@ -1,11 +1,15 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:supra_cart_admin/core/widgets/custom_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_form.dart';
-import 'package:supra_cart_admin/features/products/view/widget/category_drop_down.dart';
+import 'package:supra_cart_admin/features/products/view/widget/drop_down.dart';
 import '../../../core/helper_function/validators.dart';
+import '../../../core/utilis/constants.dart';
 class AddProductView extends StatefulWidget {
   const AddProductView({super.key});
   static const String routeName = '/addProduct';
@@ -23,6 +27,10 @@ class _AddProductViewState extends State<AddProductView> {
   late GlobalKey<FormState> editProductFormKey;
   late AutovalidateMode autovalidateMode =
       AutovalidateMode.disabled;
+  File?pickedImage;
+  final ImagePicker picker = ImagePicker();
+
+
   @override
   void initState() {
     productNameController = TextEditingController();
@@ -67,8 +75,11 @@ class _AddProductViewState extends State<AddProductView> {
                             child: CircleAvatar(
                               radius: 40.r,
                               backgroundColor: Colors.grey[200],
-                               //backgroundImage: ,
-                              child: Icon(Icons.camera_alt, size: 30.sp, color: Colors.grey),
+                               backgroundImage:pickedImage !=null?
+                              FileImage(pickedImage!):null,
+                              child:pickedImage==null?
+                              Icon(Icons.camera_alt, size: 30.sp, color: Colors.grey):
+                              null,
                             ),
                           ),
                           Positioned(
@@ -80,7 +91,7 @@ class _AddProductViewState extends State<AddProductView> {
                               child: IconButton(
                                 icon: Icon(Icons.camera_alt, size: 20.sp, color: Colors.white),
                                 onPressed: () {
-                                  // فتح الصور أو الكاميرا لتغيير الصورة
+                                  pickImg();
                                 },
                               ),
                             ),
@@ -118,15 +129,17 @@ class _AddProductViewState extends State<AddProductView> {
                         ],
                       ),
                       SizedBox(height: 20.h),
-                      CategoryDropdown(
+                      DropDownList(
+
                         selectedCategory: selectedCategory,
                         onChanged: (String? val) {
                           selectedCategory = val;
+                          print(val);
                           setState(() {});
                         },
                         validator: (String? val) {
                           return FormValidators.validateProductCategory(val);
-                        },
+                        }, dropDownList:DropDownListList, text: 'Category',
                       ),
                       SizedBox(height: 20.h),
                       CustomTextFormField(
@@ -167,5 +180,13 @@ class _AddProductViewState extends State<AddProductView> {
         ),
       ),
     );
+  }
+  Future<void>pickImg()async{
+    final XFile? image=await picker.pickImage(source: ImageSource.gallery);
+    if(image!=null ){
+      setState(() {
+        pickedImage= File(image.path);
+      });
+    }
   }
 }
