@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supra_cart_admin/features/products/view/comments_view.dart';
 import 'package:supra_cart_admin/features/products/view/edit_product_view.dart';
 import 'package:supra_cart_admin/features/products/view/widget/product_card.dart';
 
@@ -15,7 +16,10 @@ class ProductViewBody extends StatelessWidget {
       productPrice: 120,productOldPrice: 200,editProductFun: (){
         Navigator.pushNamed(context,EditProductView.routeName);
       },
-    viewProductFeedbackFun: (){},deleteProductFun: (){},),
+    viewProductFeedbackFun: (){
+      Navigator.pushNamed(context,CommentsView.routeName);
+
+    },deleteProductFun: (){},),
         separatorBuilder: (context,index)=>Container(height: 5.h,), itemCount: 10);
 
   }

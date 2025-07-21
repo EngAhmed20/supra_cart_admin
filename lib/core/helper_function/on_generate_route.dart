@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:supra_cart_admin/features/auth/view/login_view.dart';
 import 'package:supra_cart_admin/features/home/view/home_view.dart';
+import 'package:supra_cart_admin/features/products/view/comments_view.dart';
 import 'package:supra_cart_admin/features/splash/view/splash_view.dart';
+import '../../features/products/view/add_product_view.dart';
 import '../../features/products/view/edit_product_view.dart';
 import '../../features/products/view/product_view.dart';
 Route<dynamic> onGenerateRoute(RouteSettings settings){
@@ -16,6 +18,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings){
       return MaterialPageRoute(builder: (_) => const ProductView());
     case EditProductView.routeName:
       return MaterialPageRoute(builder: (_) => const EditProductView());
+    case CommentsView.routeName:
+      return MaterialPageRoute(builder: (_) => const CommentsView());
+    case AddProductView.routeName:
+      return MaterialPageRoute(builder: (_) => const AddProductView());
       default:
       return MaterialPageRoute(builder: (_) => const Scaffold(
         body: Center(child: Text('Page not found')),
