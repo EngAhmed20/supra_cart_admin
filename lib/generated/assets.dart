@@ -2,6 +2,7 @@
 class Assets {
   Assets._();
 
+  static const String imgCheck = 'assets/img/Check.svg';
   static const String imgSupraLogo = 'assets/img/supra_logo.png';
 
 }

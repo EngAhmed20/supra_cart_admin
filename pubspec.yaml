@@ -23,7 +23,7 @@ dependencies:
   dartz: ^0.10.1
   skeletonizer: ^1.4.3
   image_picker:
-
+  flutter_svg:
 dev_dependencies:
   flutter_test:
     sdk: flutter

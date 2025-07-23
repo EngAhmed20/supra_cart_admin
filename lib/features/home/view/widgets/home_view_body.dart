@@ -4,6 +4,7 @@ import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
 
+import '../../../orders/views/orders_view.dart';
 import '../../../products/view/product_view.dart';
 
 class HomeViewBody extends StatelessWidget {
@@ -27,7 +28,10 @@ class HomeViewBody extends StatelessWidget {
                 Navigator.pushNamed(context, ProductView.routeName);
               }),
               SizedBox(height: 15.h),
-              CustomTextButton(text: 'Orders', onPressed: () {}),
+              CustomTextButton(text: 'Orders', onPressed: () {
+                // Navigate to Orders view
+                 Navigator.pushNamed(context, OrdersView.routeName);
+              }),
               SizedBox(height: 15.h),
               CustomTextButton(text: 'Add Products', onPressed: () {
                 Navigator.pushNamed(context, AddProductView.routeName);
