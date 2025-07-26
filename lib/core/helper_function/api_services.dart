@@ -21,12 +21,30 @@ class ApiServices extends BaseApiServices{
       return Left(Failure(message: 'Failed to get data: ${e.message}'));
     }
   }
-  Future<Either<Failure, dynamic>>postData({required String path, Map<String, dynamic>? data})async{
+  Future<Either<Failure, dynamic>> postData({
+    required String path,
+    Map<String, dynamic>? data,
+  }) async {
     try {
       Response response = await dio.post(path, data: data);
       return Right(response);
     } on DioException catch (e) {
-      return Left(Failure(message: 'Failed to post data: ${e.message}'));
+      String errorMessage = 'Unknown error';
+      if (e.response?.data != null) {
+        final responseData = e.response?.data;
+        if (responseData is Map<String, dynamic>) {
+          errorMessage = responseData['msg'] ??
+              responseData['message'] ??
+              responseData['error'] ??
+              e.message ??
+              'Failed to post data';
+        } else {
+          errorMessage = e.message ?? 'Failed to post data';
+        }
+      } else {
+        errorMessage = e.message ?? 'Failed to post data';
+      }
+      return Left(Failure(message: errorMessage));
     }
   }
   Future<Either<Failure, dynamic>>patchData({required String path, Map<String, dynamic>? data})async{

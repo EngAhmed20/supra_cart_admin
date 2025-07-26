@@ -1,10 +1,11 @@
-
-
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
-
+import 'package:supra_cart_admin/core/helper_function/api_services.dart';
+import 'package:supra_cart_admin/core/helper_function/base_api_services.dart';
+import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo.dart';
+import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo_impl.dart';
 import '../secret_data.dart';
 import '../utilis/constants.dart';
 
@@ -16,14 +17,26 @@ class ServicesLoacator {
     final sharedPrefs = await SharedPreferences.getInstance();
 
     getIt.registerLazySingleton<SharedPreferences>(() => sharedPrefs);
+    getIt.registerLazySingleton<BaseApiServices>(()=>ApiServices(dio: getIt.get<Dio>()));
+    getIt.registerLazySingleton<BaseApiServices>(()=>ApiServices(dio: getIt.get<Dio>(instanceName: authDio)),instanceName: authApi);
+
+
     ///Dio
     getIt.registerLazySingleton<Dio>(() => Dio(
       BaseOptions(
         baseUrl: baseUrl,
         headers: {'apikey': SecretData.supabaseAnonKey},
       ),
-    ));
+    ),
+    );
+    /// create acc dio
+    getIt.registerLazySingleton<Dio>(()=>Dio(      BaseOptions(
+      baseUrl: signUpBaseUrl,
+      headers: {'apikey': SecretData.supabaseAnonKey},
+    ),
+    ),instanceName:authDio);
     // API Service
+    getIt.registerLazySingleton<AddAdminRepo>(()=>AddAdminRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
 
 
   }

@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
 
+import '../../../../core/helper_function/get_it_services.dart';
+import '../../../admin/cubit/add_admin_cubit.dart';
+import '../../../admin/data/repo/add_admin_repo.dart';
 import '../../../orders/views/orders_view.dart';
 import '../../../products/view/product_view.dart';
 
@@ -38,7 +42,16 @@ class HomeViewBody extends StatelessWidget {
               }),
               SizedBox(height: 15.h),
               CustomTextButton(text: 'Add An Admin', onPressed: () {
-                Navigator.pushNamed(context, AddAdminView.routeName);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => BlocProvider(
+                      create: (context) => AddAdminCubit(getIt.get<AddAdminRepo>()),
+                      child: AddAdminView(),
+                    ),
+                  ),
+                );
+
               }),
             ],
           ),
