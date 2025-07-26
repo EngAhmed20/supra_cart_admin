@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
@@ -46,7 +47,7 @@ class HomeViewBody extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => BlocProvider(
-                      create: (context) => AddAdminCubit(getIt.get<AddAdminRepo>()),
+                      create: (context) => AddAdminCubit(getIt.get<AddAdminRepo>(),getIt.get<AdminInfoRepo>()),
                       child: AddAdminView(),
                     ),
                   ),

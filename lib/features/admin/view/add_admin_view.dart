@@ -132,6 +132,8 @@ class _AddAdminViewState extends State<AddAdminView> {
                           LoginButton(loginText: 'Confirm Addition',onTap: ()async {
                             if (addAdminFormKey.currentState!.validate()) {
                               cubit.signUp(email: adminEmailController.text,
+                                  name: adminNameController.text,
+                                  role: selectedrole!,
                                   password: adminPasswordController.text);
                               print('Admin Added: ${adminNameController.text}, ${adminEmailController.text}');
                             } else {
@@ -163,7 +165,9 @@ class _AddAdminViewState extends State<AddAdminView> {
           context: context,
           msg: "Account created successfully.",
           isError: false,
+
         );
+        clear();
       } else if (state is AddAdminFailure) {
         customSnackBar(context: context, msg: state.error);
       }
@@ -182,6 +186,16 @@ class _AddAdminViewState extends State<AddAdminView> {
   changeConfirmPasswordVisibility() {
     setState(() {
      hideConfirmPass = !hideConfirmPass;
+    });
+  }
+  clear(){
+    adminNameController.clear();
+    adminEmailController.clear();
+    adminPasswordController.clear();
+    adminConfirmPasswordController.clear();
+    selectedrole=null;
+    setState(() {
+      autovalidateMode = AutovalidateMode.disabled;
     });
   }
 }

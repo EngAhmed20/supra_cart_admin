@@ -31,4 +31,5 @@ const List<String> DropDownListList= [
 final List<String> adminRolesList = ['Primary', 'Secondary'];
 const String authDio="authDio";
 const String authApi="authApi";
+const String adminTable='admin_table';
 

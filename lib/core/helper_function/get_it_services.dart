@@ -4,6 +4,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
 import 'package:supra_cart_admin/core/helper_function/api_services.dart';
 import 'package:supra_cart_admin/core/helper_function/base_api_services.dart';
+import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
+import 'package:supra_cart_admin/core/repo/admin_info_repo_impl.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo_impl.dart';
 import '../secret_data.dart';
@@ -30,7 +32,7 @@ class ServicesLoacator {
     ),
     );
     /// create acc dio
-    getIt.registerLazySingleton<Dio>(()=>Dio(      BaseOptions(
+    getIt.registerLazySingleton<Dio>(()=>Dio(BaseOptions(
       baseUrl: signUpBaseUrl,
       headers: {'apikey': SecretData.supabaseAnonKey},
     ),
@@ -38,6 +40,7 @@ class ServicesLoacator {
     // API Service
     getIt.registerLazySingleton<AddAdminRepo>(()=>AddAdminRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
 
+    getIt.registerLazySingleton<AdminInfoRepo>(()=>AdminInfoRepoImp(apiServices: getIt.get<BaseApiServices>()));
 
   }
 }
