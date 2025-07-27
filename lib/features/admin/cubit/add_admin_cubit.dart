@@ -2,13 +2,13 @@ import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:meta/meta.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
-import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo.dart';
+import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
 
 part 'add_admin_state.dart';
 
 class AddAdminCubit extends Cubit<AddAdminState> {
   AddAdminCubit(this.addAdminRepo,this.adminInfoRepo) : super(AddAdminInitial());
-  final AddAdminRepo addAdminRepo;
+  final AdminAuthRepo addAdminRepo;
   final AdminInfoRepo adminInfoRepo;
   Future<void> signUp({required String email,required String password,required String name,required String role}) async {
     emit(AddAdminLoading());

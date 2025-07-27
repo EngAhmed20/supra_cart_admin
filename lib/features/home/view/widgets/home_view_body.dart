@@ -8,7 +8,7 @@ import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
 
 import '../../../../core/helper_function/get_it_services.dart';
 import '../../../admin/cubit/add_admin_cubit.dart';
-import '../../../admin/data/repo/add_admin_repo.dart';
+import '../../../admin/data/repo/admin_auth_repo.dart';
 import '../../../orders/views/orders_view.dart';
 import '../../../products/view/product_view.dart';
 
@@ -47,7 +47,7 @@ class HomeViewBody extends StatelessWidget {
                   context,
                   MaterialPageRoute(
                     builder: (context) => BlocProvider(
-                      create: (context) => AddAdminCubit(getIt.get<AddAdminRepo>(),getIt.get<AdminInfoRepo>()),
+                      create: (context) => AddAdminCubit(getIt.get<AdminAuthRepo>(),getIt.get<AdminInfoRepo>()),
                       child: AddAdminView(),
                     ),
                   ),

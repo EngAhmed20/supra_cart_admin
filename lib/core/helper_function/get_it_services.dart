@@ -6,8 +6,8 @@ import 'package:supra_cart_admin/core/helper_function/api_services.dart';
 import 'package:supra_cart_admin/core/helper_function/base_api_services.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo_impl.dart';
-import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo.dart';
-import 'package:supra_cart_admin/features/admin/data/repo/add_admin_repo_impl.dart';
+import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
+import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo_impl.dart';
 import '../secret_data.dart';
 import '../utilis/constants.dart';
 
@@ -33,12 +33,12 @@ class ServicesLoacator {
     );
     /// create acc dio
     getIt.registerLazySingleton<Dio>(()=>Dio(BaseOptions(
-      baseUrl: signUpBaseUrl,
+      baseUrl: authBaseUrl,
       headers: {'apikey': SecretData.supabaseAnonKey},
     ),
     ),instanceName:authDio);
     // API Service
-    getIt.registerLazySingleton<AddAdminRepo>(()=>AddAdminRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
+    getIt.registerLazySingleton<AdminAuthRepo>(()=>AdminAuthRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
 
     getIt.registerLazySingleton<AdminInfoRepo>(()=>AdminInfoRepoImp(apiServices: getIt.get<BaseApiServices>()));
 

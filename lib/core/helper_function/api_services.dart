@@ -24,9 +24,10 @@ class ApiServices extends BaseApiServices{
   Future<Either<Failure, dynamic>> postData({
     required String path,
     Map<String, dynamic>? data,
+    Map<String, dynamic>? queryParameters
   }) async {
     try {
-      Response response = await dio.post(path, data: data);
+      Response response = await dio.post(path, data: data,queryParameters: queryParameters);
       return Right(response);
     } on DioException catch (e) {
       String errorMessage = 'Unknown error';
