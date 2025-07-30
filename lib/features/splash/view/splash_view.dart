@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supra_cart_admin/core/utilis/constants.dart';
 import 'package:supra_cart_admin/features/auth/view/login_view.dart';
+import 'package:supra_cart_admin/features/home/view/home_view.dart';
 import '../../../core/helper_function/get_it_services.dart';
 import '../../../generated/assets.dart';
 
@@ -36,7 +37,7 @@ class _SplashViewState extends State<SplashView> {
   void executeNavigation() {
     Future.delayed(const Duration(seconds: 3), () {
       getIt.get<SharedPreferences>().containsKey(accessToken)
-          ?Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route) => false)
+          ?Navigator.pushNamedAndRemoveUntil(context,HomeView.routeName, (route) => false)
           :
       Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route)=>false);
 

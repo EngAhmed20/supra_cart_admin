@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:supra_cart_admin/core/helper_function/get_it_services.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
+import 'package:supra_cart_admin/features/home/cubit/home_cubit.dart';
 import 'package:supra_cart_admin/features/home/view/widgets/home_view_body.dart';
 
 class HomeView extends StatelessWidget {
@@ -9,25 +13,27 @@ class HomeView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title:  Text('Supra Cart Admin',style: textStyle.Bold23,),
-        centerTitle: true,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications),
+    return BlocProvider(
+      create: (context) => HomeCubit(getIt.get<SharedPreferences>()),
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text('Supra Cart Admin', style: textStyle.Bold23),
+          centerTitle: true,
+          actions: [
+            IconButton(onPressed: () {}, icon: const Icon(Icons.notifications)),
+            IconButton(
+              onPressed: () {},
+              icon: const Icon(Icons.logout_outlined, color: Colors.red),
+            ),
+          ],
+        ),
+        body: SafeArea(
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 15.w, vertical: 15.h),
+            child: HomeViewBody(),
           ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.logout_outlined,color: Colors.red,),
-          ),
-        ],
+        ),
       ),
-      body: SafeArea(child: Padding(
-        padding:  EdgeInsets.symmetric(horizontal: 15.w,vertical: 15.h),
-        child: HomeViewBody(),
-      )),
     );
   }
 }
