@@ -13,9 +13,9 @@ class ApiServices extends BaseApiServices{
   Supabase supabase= Supabase.instance;
 
   ApiServices({required this.dio});
-  Future<Either<Failure, dynamic>> getData({required String path})async{
+  Future<Either<Failure, dynamic>> getData({required String path,Map<String,dynamic>? queryParameters})async{
     try {
-      Response response = await dio.get(path);
+      Response response = await dio.get(path,queryParameters: queryParameters);
       return Right(response.data);
     } on DioException catch (e) {
       return Left(Failure(message: 'Failed to get data: ${e.message}'));

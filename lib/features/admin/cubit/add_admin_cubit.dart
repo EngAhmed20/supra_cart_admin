@@ -19,17 +19,19 @@ class AddAdminCubit extends Cubit<AddAdminState> {
     });
      result.fold(
       (failure) => emit(AddAdminFailure(error: failure.message)),
-      (success)async{
-        await addAdminInfo(name: name,email: email,role: role);
+      (adminId)async{
+
+        await addAdminInfo(name: name,email: email,role: role,id:adminId );
         emit(AddAdminSuccess());
       },
     );
   }
-  Future<void> addAdminInfo({required String name,required String email,required String role}) async {
+  Future<void> addAdminInfo({required String name,required String email,required String id,required String role}) async {
     final result = await adminInfoRepo.addAdminInfo(data: {
       'admin_name':name,
       'admin_email': email,
       'admin_role':role,
+      'id':id
     });
     result.fold(
       (failure) => emit(AddAdminInfoFailure(error: failure.message)),

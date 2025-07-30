@@ -10,4 +10,12 @@ class AuthFailure extends AuthState {
 
   AuthFailure({required this.error});
 }
+class GetAdminInfoLoading extends AuthState {}
+class GetAdminInfoSuccess extends AuthState {
 
+}
+class GetAdminInfoFailure extends AuthState {
+  final String error;
+
+  GetAdminInfoFailure({required this.error});
+}

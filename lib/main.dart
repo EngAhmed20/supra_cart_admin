@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
 import 'package:supra_cart_admin/features/auth/cubit/auth_cubit.dart';
 import 'package:supra_cart_admin/features/splash/view/splash_view.dart';
@@ -37,7 +39,7 @@ class MyApp extends StatelessWidget {
       minTextAdapt: true,
       builder: (_,child){
         return MultiBlocProvider(providers: [
-          BlocProvider(create: (context)=>AuthCubit(adminAuthRepo: getIt.get<AdminAuthRepo>()))
+          BlocProvider(create: (context)=>AuthCubit(adminAuthRepo: getIt.get<AdminAuthRepo>(), sharedPreferences: getIt.get<SharedPreferences>(), adminInfoRepo: getIt.get<AdminInfoRepo>()))
         ], child:MaterialApp(
           title: 'Supra Cart Dashboard',
           theme: ThemeData(

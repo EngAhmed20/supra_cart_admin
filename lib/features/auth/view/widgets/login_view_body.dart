@@ -24,6 +24,7 @@ class _LoginViewBodyState extends State<LoginViewBody> {
    TextEditingController emailController = TextEditingController();
     TextEditingController passwordController = TextEditingController();
     AutovalidateMode autovalidateMode =AutovalidateMode.disabled;
+  bool isPasswordVisible = false;
 
   @override
   Widget build(BuildContext context) {
@@ -66,9 +67,11 @@ class _LoginViewBodyState extends State<LoginViewBody> {
                       hintText: 'Enter your password',
                       isPassword: true,
                       controller: passwordController,
-                      obscureText: true,
+                      obscureText: !isPasswordVisible,
                       onTogglePasswordVisibility: () {
-                        //cubit.changePasswordVisibility();
+                        setState(() {
+                          isPasswordVisible = !isPasswordVisible;
+                        });
                       },
                       validator: (value) {
                         return FormValidators.validatePassword(value);
