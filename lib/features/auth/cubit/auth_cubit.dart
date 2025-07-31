@@ -48,7 +48,6 @@ class AuthCubit extends Cubit<AuthState> {
   void saveAdminInfoIntoShared({required AdminModel adminModel}) {
     var data = jsonEncode(adminModel.toJson());
     sharedPreferences.setString(adminInfo, data);
-  print('savvvvvvvvvved');
   }
 
 }
