@@ -38,8 +38,7 @@ class _SplashViewState extends State<SplashView> {
     Future.delayed(const Duration(seconds: 3), () {
       getIt.get<SharedPreferences>().containsKey(accessToken)
           ?Navigator.pushNamedAndRemoveUntil(context,HomeView.routeName, (route) => false)
-          :
-      Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route)=>false);
+          : Navigator.pushNamedAndRemoveUntil(context, LoginView.routeName, (route)=>false);
 
     });
   }

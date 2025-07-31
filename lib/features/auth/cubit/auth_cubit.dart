@@ -28,7 +28,6 @@ class AuthCubit extends Cubit<AuthState> {
       emit(AuthFailure(error: failure.message));
     }, (response) async {
       await sharedPreferences.setString(accessToken, response.token);
-      print(response.userId);
       await getAdminInfo(adminId: response.userId);
       emit(AuthSuccess());
     });
