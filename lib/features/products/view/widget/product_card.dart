@@ -1,16 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supra_cart_admin/core/models/product_model.dart';
 import 'package:supra_cart_admin/core/style/app_colors.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
 import 'package:supra_cart_admin/core/widgets/product_img.dart';
 import '../../../../core/widgets/custom_elevated_button.dart';
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key, required this.productImg, required this.productName, required this.productDescription, required this.productPrice, this.productOldPrice, required this.editProductFun, required this.viewProductFeedbackFun, required this.deleteProductFun});
-  final String productImg;
-  final String productName;
-  final String productDescription;
-  final double productPrice;
-  final double? productOldPrice;
+  const ProductCard({super.key, required this.productModel, required this.editProductFun, required this.viewProductFeedbackFun, required this.deleteProductFun});
+  final ProductModel  productModel;
   final void Function() editProductFun;
   final void Function() viewProductFeedbackFun;
   final void Function() deleteProductFun;
@@ -27,15 +24,15 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(children: [
-              ProductPicture(imgUrl:productImg,),
+              ProductPicture(imgUrl:productModel.imageUrl,),
               SizedBox(width: 20.w),
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(productName, style: textStyle.Bold19),
+                    Text(productModel.name, style: textStyle.Bold19),
                     SizedBox(height: 5.h),
-                    Text(productDescription, style: textStyle.regular16,
+                    Text(productModel.description, style: textStyle.regular16,
                       maxLines: 4,
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -50,9 +47,9 @@ class ProductCard extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
 
-                Text('$productPrice \EGP ', style: textStyle.Bold16),
-                if (productOldPrice != null)
-                    Text('$productOldPrice \EGP', style: textStyle.regular16.copyWith(decoration: TextDecoration.lineThrough),),
+                Text('${productModel.price} \EGP ', style: textStyle.Bold16),
+                if (productModel.oldPrice != 0)
+                    Text('${productModel.oldPrice} \EGP', style: textStyle.regular16.copyWith(decoration: TextDecoration.lineThrough),),
 
 
               ],

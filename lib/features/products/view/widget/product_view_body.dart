@@ -1,8 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:skeletonizer/skeletonizer.dart';
+import 'package:supra_cart_admin/core/helper_function/dummy_product_list.dart';
+import 'package:supra_cart_admin/features/products/cubit/product_cubit.dart';
 import 'package:supra_cart_admin/features/products/view/comments_view.dart';
 import 'package:supra_cart_admin/features/products/view/edit_product_view.dart';
 import 'package:supra_cart_admin/features/products/view/widget/product_card.dart';
+
+import '../../../../core/style/app_text_styles.dart';
 
 
 class ProductViewBody extends StatelessWidget {
@@ -10,17 +16,34 @@ class ProductViewBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView.separated(itemBuilder: (context,index)=>ProductCard(productImg: 'https://img.freepik.com/free-photo/3d-rendering-cartoon-shopping-cart_23-2151680638.jpg?ga=GA1.1.220289254.1670056954&semt=ais_hybrid&w=740',
-      productName: 'Lenovo IdeaPad 3',
-       productDescription: 'Powerful and sleekformance Intel Core i7 processor, 16GB of RAM, and a fast 512GB SSD—perfect for multitasking, content creation, and gaming. The 15.6-inch Full HD display delivers vibrant visuals, while the lightweight aluminum design ensures portability wherever you.',
-      productPrice: 120,productOldPrice: 200,editProductFun: (){
-        Navigator.pushNamed(context,EditProductView.routeName);
-      },
-    viewProductFeedbackFun: (){
-      Navigator.pushNamed(context,CommentsView.routeName);
+    return BlocConsumer<ProductCubit,ProductState>(builder: (context,state){
+      var cubit = context.read<ProductCubit>();
+      if(state is GetProductLoading){
+        return Skeletonizer(child:  ListView.separated(itemBuilder: (context,index)=>ProductCard(
+          productModel: dummyProductList[index],
+          editProductFun: (){
+          },
+          viewProductFeedbackFun: (){
 
-    },deleteProductFun: (){},),
-        separatorBuilder: (context,index)=>Container(height: 5.h,), itemCount: 10);
+          },deleteProductFun: (){},),
+      separatorBuilder: (context,index)=>Container(height: 5.h,), itemCount: dummyProductList.length),);}
+      else if (state is GetProductFailure) {
+        return Center(
+          child: Text(state.message, style: textStyle.Bold16),
+        );
+      }
+      return ListView.separated(itemBuilder: (context,index)=>ProductCard(productModel:cubit.productList[index]
+        ,editProductFun: (){
+          Navigator.pushNamed(context,EditProductView.routeName);
+        },
+        viewProductFeedbackFun: (){
+          Navigator.pushNamed(context,CommentsView.routeName);
+
+        },deleteProductFun: (){},),
+          separatorBuilder: (context,index)=>Container(height: 5.h,), itemCount: cubit.productList.length);
+    }, listener: (context,state){
+
+    });
 
   }
 

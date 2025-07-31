@@ -8,6 +8,8 @@ import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo_impl.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo_impl.dart';
+import 'package:supra_cart_admin/features/products/data/repo/product_repo.dart';
+import 'package:supra_cart_admin/features/products/data/repo/product_repo_impl.dart';
 import '../secret_data.dart';
 import '../utilis/constants.dart';
 
@@ -41,6 +43,7 @@ class ServicesLoacator {
     getIt.registerLazySingleton<AdminAuthRepo>(()=>AdminAuthRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
 
     getIt.registerLazySingleton<AdminInfoRepo>(()=>AdminInfoRepoImp(apiServices: getIt.get<BaseApiServices>()));
+    getIt.registerLazySingleton<ProductRepo>(()=>ProductRepoImpl(apiServices: getIt.get<BaseApiServices>()));
 
   }
 }

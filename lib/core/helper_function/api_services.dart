@@ -13,7 +13,8 @@ class ApiServices extends BaseApiServices{
   Supabase supabase= Supabase.instance;
 
   ApiServices({required this.dio});
-  Future<Either<Failure, dynamic>> getData({required String path,Map<String,dynamic>? queryParameters})async{
+  Future<Either<Failure, dynamic>> getData({required String path,Map<String,
+      dynamic>? queryParameters,String? token})async{
     try {
       Response response = await dio.get(path,queryParameters: queryParameters);
       return Right(response.data);
@@ -25,9 +26,16 @@ class ApiServices extends BaseApiServices{
     required String path,
     Map<String, dynamic>? data,
     Map<String, dynamic>? queryParameters
+    ,String? token
   }) async {
     try {
-      Response response = await dio.post(path, data: data,queryParameters: queryParameters);
+      Response response = await dio.post(path, data: data,queryParameters: queryParameters,
+      options: Options(
+        headers: {
+          "Authorization":"Bearer $token",
+        }
+      )
+      );
       return Right(response);
     } on DioException catch (e) {
       String errorMessage = 'Unknown error';
@@ -48,17 +56,28 @@ class ApiServices extends BaseApiServices{
       return Left(Failure(message: errorMessage));
     }
   }
-  Future<Either<Failure, dynamic>>patchData({required String path, Map<String, dynamic>? data})async{
+  Future<Either<Failure, dynamic>>patchData({required String path,
+    Map<String, dynamic>? data
+    ,String? token
+  })async{
     try {
-      Response response = await dio.patch(path, data: data);
+      Response response = await dio.patch(path, data: data,options: Options(
+          headers: {
+            "Authorization":"Bearer $token",
+          }
+      ));
       return Right(response);
     } on DioException catch (e) {
       return Left(Failure(message: 'Failed to patch data: ${e.message}'));
     }
   }
-  Future<Either<Failure, dynamic>>deleteData({required String path})async{
+  Future<Either<Failure, dynamic>>deleteData({required String path,String? token})async{
     try {
-      Response response = await dio.delete(path);
+      Response response = await dio.delete(path,options: Options(
+          headers: {
+            "Authorization":"Bearer $token",
+          }
+      ));
       return Right(response);
     } on DioException catch (e) {
       return Left(Failure(message: 'Failed to delete data: ${e.message}'));

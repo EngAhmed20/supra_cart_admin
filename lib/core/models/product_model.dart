@@ -1,8 +1,4 @@
 
-import 'package:supra_cart_admin/core/models/purchase_model.dart';
-
-import 'fav_product_model.dart';
-
 class ProductModel {
   final String id;
   final String name;
@@ -11,8 +7,6 @@ class ProductModel {
   final String description;
   final String category;
   final String imageUrl;
-  final List<FavoriteProductModel> favoriteProducts;
-  final List<PurchaseModel> purchaseTable;
 
   num get sale {
     if (oldPrice > 0 && oldPrice > price) {
@@ -29,8 +23,6 @@ class ProductModel {
     required this.description,
     required this.category,
     required this.imageUrl,
-    required this.favoriteProducts,
-    required this.purchaseTable,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -42,16 +34,10 @@ class ProductModel {
       description: json['description'] ?? '',
       category: json['category'] ?? '',
       imageUrl: json['img_url'] ?? '',
-      favoriteProducts: (json['favorite_products'] as List<dynamic>?)
-          ?.map((e) => FavoriteProductModel.fromJson(e))
-          .toList() ??
-          [],
-      purchaseTable: (json['purchase_table'] as List<dynamic>?)
-          ?.map((e) => PurchaseModel.fromJson(e))
-          .toList() ??
-          [],
+
     );
   }
+
 
   static double _parseDouble(dynamic value) {
     if (value == null) return 0;
