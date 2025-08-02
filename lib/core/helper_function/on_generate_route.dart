@@ -13,6 +13,7 @@ import 'package:supra_cart_admin/features/splash/view/splash_view.dart';
 import '../../features/products/view/add_product_view.dart';
 import '../../features/products/view/edit_product_view.dart';
 import '../../features/products/view/product_view.dart';
+import '../models/product_model.dart';
 Route<dynamic> onGenerateRoute(RouteSettings settings){
   switch (settings.name) {
     case SplashView.routeName:
@@ -27,7 +28,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings){
       child: const ProductView(),
       ));
     case EditProductView.routeName:
-      return MaterialPageRoute(builder: (_) => const EditProductView());
+      final product = settings.arguments as ProductModel;
+      return MaterialPageRoute(builder: (_) =>  EditProductView(
+        selectedProduct: product,
+      ));
     case CommentsView.routeName:
       return MaterialPageRoute(builder: (_) => const CommentsView());
     case AddProductView.routeName:

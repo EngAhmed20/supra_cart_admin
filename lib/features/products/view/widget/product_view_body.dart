@@ -34,7 +34,7 @@ class ProductViewBody extends StatelessWidget {
       }
       return ListView.separated(itemBuilder: (context,index)=>ProductCard(productModel:cubit.productList[index]
         ,editProductFun: (){
-          Navigator.pushNamed(context,EditProductView.routeName);
+          Navigator.pushNamed(context,EditProductView.routeName,arguments: cubit.productList[index]);
         },
         viewProductFeedbackFun: (){
           Navigator.pushNamed(context,CommentsView.routeName);
