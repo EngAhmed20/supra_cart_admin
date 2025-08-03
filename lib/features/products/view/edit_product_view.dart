@@ -26,9 +26,12 @@ class _EditProductViewState extends State<EditProductView> {
    TextEditingController productPriceController= TextEditingController();
    TextEditingController oldPriceController= TextEditingController();
    TextEditingController productDescriptionController= TextEditingController();
+   TextEditingController priceAfterDiscountController= TextEditingController();
   late GlobalKey<FormState> editProductFormKey;
   late AutovalidateMode autovalidateMode =
       AutovalidateMode.disabled;
+  double priceAfterDiscount=0;
+  double currentPrice=0;
   @override
   void initState() {
     productNameController .text = widget.selectedProduct.name;
@@ -116,9 +119,13 @@ class _EditProductViewState extends State<EditProductView> {
                             Spacer(),
                             Flexible(
                               child: CustomTextFormField(
-                                hintText: 'Old Price',
+                                hintText: 'New Price',
                                 keyboardType: TextInputType.number,
-                                controller: oldPriceController,
+                                controller: priceAfterDiscountController,
+                                onChanged: (String?val){
+                                  updateDiscount(val);
+
+                                },
                               ),
                             ),
                           ],
@@ -172,7 +179,7 @@ class _EditProductViewState extends State<EditProductView> {
                 ],
               )
             ),
-            if (widget.selectedProduct.oldPrice != 0)
+            if (widget.selectedProduct.oldPrice != 0||priceAfterDiscount!=0)
              Positioned(
               top: 0,
               left: 0,
@@ -182,7 +189,7 @@ class _EditProductViewState extends State<EditProductView> {
                   color: Colors.red,
                   borderRadius: BorderRadius.circular(10.h),
                 ),
-                child: Text('${widget.selectedProduct.sale} % OFF', style: textStyle.semiBold16.copyWith(
+                child: Text('${widget.selectedProduct.getSale(priceBeforeDiscount:currentPrice,priceAfterDiscount: priceAfterDiscount)} % OFF', style: textStyle.semiBold16.copyWith(
                   color: Colors.white),
                 ),
               ),
@@ -191,5 +198,12 @@ class _EditProductViewState extends State<EditProductView> {
         ),
       ),
     );
+  }
+
+  void updateDiscount(String? val) {
+    priceAfterDiscount = double.tryParse(val??'')??0;
+    currentPrice = double.tryParse(productPriceController.text)??0;
+    print(priceAfterDiscount);
+    setState(() {});
   }
 }

@@ -10,6 +10,7 @@ class CustomTextFormField extends StatelessWidget {
   final int? maxLines;
   final VoidCallback? onTogglePasswordVisibility;
   final Widget? suffixIcon;
+  final void Function(String)? onChanged;
 
   const CustomTextFormField({
     Key? key,
@@ -19,7 +20,7 @@ class CustomTextFormField extends StatelessWidget {
     this.isPassword = false,
     this.obscureText = false,
     this.controller,
-    this.onTogglePasswordVisibility, this.maxLines=1, this.suffixIcon,
+    this.onTogglePasswordVisibility, this.maxLines=1, this.suffixIcon, this.onChanged,
   }) : super(key: key);
 
   @override
@@ -35,6 +36,7 @@ class CustomTextFormField extends StatelessWidget {
       maxLines: maxLines,
       obscureText: obscureText,
       keyboardType: keyboardType,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         border: outlineBorder,

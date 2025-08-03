@@ -8,9 +8,15 @@ class ProductModel {
   final String category;
   final String imageUrl;
 
-  num get sale {
-    if (oldPrice > 0 && oldPrice > price) {
-      return ((oldPrice - price) / oldPrice * 100).truncate();
+  num getSale({double?priceBeforeDiscount, double? priceAfterDiscount})  {
+    final bool usePassedValues =
+        priceBeforeDiscount != null && priceBeforeDiscount > 0 &&
+            priceAfterDiscount != null && priceAfterDiscount > 0;
+    final before = usePassedValues ? priceBeforeDiscount : oldPrice;
+    final after = usePassedValues ? priceAfterDiscount : price;
+
+    if (before > 0 && before > after) {
+      return ((before - after) / before * 100).truncate();
     }
     return 0;
   }
