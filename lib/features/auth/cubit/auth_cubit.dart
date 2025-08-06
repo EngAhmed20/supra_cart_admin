@@ -1,10 +1,12 @@
 import 'dart:convert';
 import 'dart:developer';
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supra_cart_admin/core/models/admin_model.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
+import 'package:supra_cart_admin/features/auth/view/login_view.dart';
 import '../../../core/utilis/constants.dart';
 part 'auth_state.dart';
 
@@ -48,6 +50,13 @@ class AuthCubit extends Cubit<AuthState> {
   void saveAdminInfoIntoShared({required AdminModel adminModel}) {
     var data = jsonEncode(adminModel.toJson());
     sharedPreferences.setString(adminInfo, data);
+  }
+  Future<void> signOut(BuildContext context) async {
+    emit(AuthLoading());
+    await sharedPreferences.remove(accessToken);
+    await sharedPreferences.remove(adminInfo);
+    Navigator.pushReplacementNamed(context, LoginView.routeName);
+    emit(AuthSignOutSuccess());
   }
 
 }

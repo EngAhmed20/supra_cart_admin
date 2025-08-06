@@ -19,3 +19,4 @@ class GetAdminInfoFailure extends AuthState {
 
   GetAdminInfoFailure({required this.error});
 }
+class AuthSignOutSuccess extends AuthState {}

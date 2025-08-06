@@ -10,4 +10,12 @@ class GetProductFailure extends ProductState {
   final String message;
   GetProductFailure({required this.message});
 }
+class AuthSignOutSuccess extends ProductState{}
+class AccessTokenExpired extends ProductState{}
+class AddProductLoading extends ProductState {}
+class AddProductSuccess extends ProductState {}
+class AddProductFailure extends ProductState {
+  final String message;
+  AddProductFailure({required this.message});
+}
 

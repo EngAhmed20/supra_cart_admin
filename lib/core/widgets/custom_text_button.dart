@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:supra_cart_admin/core/widgets/loadibg_ink_drop.dart';
 
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 
 class CustomTextButton extends StatelessWidget {
-  const CustomTextButton({super.key, this.style,  this.text, this.radius, required this.onPressed, this.backgroundColor, this.verticalPadding, this.horizontalPadding, this.child, this.width});
+   const CustomTextButton({super.key, this.style,  this.text, this.radius,this.isLoading=false, required this.onPressed, this.backgroundColor, this.verticalPadding, this.horizontalPadding, this.child, this.width});
   final String? text;
   final double? radius;
   final TextStyle? style;
@@ -14,6 +15,7 @@ class CustomTextButton extends StatelessWidget {
   final void Function() onPressed;
   final Widget? child;
   final double? width;
+  final bool isLoading ;
 
 
 
@@ -22,19 +24,19 @@ class CustomTextButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return SizedBox(
       width: width,
-      child: TextButton(
+      child: isLoading?LoadingInkDrop():TextButton(
         onPressed: onPressed,
         style: ButtonStyle(
-          backgroundColor: MaterialStateProperty.all<Color>(
+          backgroundColor: WidgetStateProperty.all<Color>(
             backgroundColor ?? AppColors.kPrimaryColor,
           ),
-          padding: MaterialStateProperty.all<EdgeInsetsGeometry>(
+          padding: WidgetStateProperty.all<EdgeInsetsGeometry>(
             EdgeInsets.symmetric(
               vertical: verticalPadding ?? 10,
               horizontal: horizontalPadding ?? 10,
             ),
           ),
-          shape: MaterialStateProperty.all<RoundedRectangleBorder>(
+          shape: WidgetStateProperty.all<OutlinedBorder>(
             RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(radius ?? 15),
             ),
@@ -46,7 +48,7 @@ class CustomTextButton extends StatelessWidget {
               style:
               style ?? textStyle.Bold24.copyWith(color: AppColors.kWhiteColor),
             ),
-      ),
+      )
     );
   }
 }

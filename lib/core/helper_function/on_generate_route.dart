@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supra_cart_admin/core/helper_function/get_it_services.dart';
+import 'package:supra_cart_admin/core/helper_function/storage_service.dart';
 import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/auth/view/login_view.dart';
 import 'package:supra_cart_admin/features/home/view/home_view.dart';
@@ -24,7 +25,7 @@ Route<dynamic> onGenerateRoute(RouteSettings settings){
       return MaterialPageRoute(builder: (_) => const HomeView());
     case ProductView.routeName:
       return MaterialPageRoute(builder: (_) => BlocProvider(create: (context)=>ProductCubit(getIt.get<ProductRepo>(),
-          getIt.get<SharedPreferences>()),
+          getIt.get<SharedPreferences>(),getIt.get<StorageService>()),
       child: const ProductView(),
       ));
     case EditProductView.routeName:
@@ -35,7 +36,10 @@ Route<dynamic> onGenerateRoute(RouteSettings settings){
     case CommentsView.routeName:
       return MaterialPageRoute(builder: (_) => const CommentsView());
     case AddProductView.routeName:
-      return MaterialPageRoute(builder: (_) => const AddProductView());
+      return MaterialPageRoute(builder: (_)  => BlocProvider(create: (context)=>ProductCubit(getIt.get<ProductRepo>(),
+          getIt.get<SharedPreferences>(),getIt.get<StorageService>()),
+        child: const AddProductView(),
+      ));
     case AddAdminView.routeName:
       return MaterialPageRoute(builder: (_)=>const AddAdminView());
     case OrdersView.routeName:

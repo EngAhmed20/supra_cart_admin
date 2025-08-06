@@ -28,5 +28,16 @@ class ProductRepoImpl implements ProductRepo {
 
   }
 
+  @override
+  Future<Either<Failure, void>> addProduct({required ProductModel product,required String token})async {
+    try{
+      final response=await apiServices.postData(path: productUrl,data: product.toJson(),token: token);
+      return response.fold((failure)=>Left(Failure(message: failure.message)),(successResponse)=>Right(null));
+
+    }catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
 
 }

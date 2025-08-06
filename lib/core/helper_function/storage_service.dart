@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:dartz/dartz.dart';
+import 'package:supra_cart_admin/core/helper_function/failure.dart';
+
 abstract class StorageService{
-  Future<String>uploadFile(File image);
+  Future<Either<Failure,String>>uploadFile(File image);
 }

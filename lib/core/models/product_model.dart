@@ -1,12 +1,12 @@
 
 class ProductModel {
-  final String id;
+  final String? id;
   final String name;
   final double price;
   final double oldPrice;
   final String description;
   final String category;
-  final String imageUrl;
+  late  String imageUrl;
 
   num getSale({double?priceBeforeDiscount, double? priceAfterDiscount})  {
     final bool usePassedValues =
@@ -22,7 +22,7 @@ class ProductModel {
   }
 
   ProductModel({
-    required this.id,
+     this.id,
     required this.name,
     required this.price,
     required this.oldPrice,
@@ -42,6 +42,16 @@ class ProductModel {
       imageUrl: json['img_url'] ?? '',
 
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'product_name': name,
+      'product_price': price,
+      'old_price': oldPrice,
+      'description': description,
+      'category': category,
+      'img_url': imageUrl,
+    };
   }
 
 
