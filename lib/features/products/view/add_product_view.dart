@@ -224,32 +224,6 @@ class _AddProductViewState extends State<AddProductView> {
                             ),
                           ),
                         ),
-                        IconButton(onPressed: (){
-                          showDialog(context: context, builder: (context)=>AlertDialog(
-                            title: Text('Session Expired',style: textStyle.semiBold16,),
-                            content: Text('Your session has expired. please log in again',style: textStyle.regular16,),
-                            actions: [
-                              TextButton(onPressed: (){
-                                signOut(context, getIt.get<SharedPreferences>());
-                              }, child:Text('Log Out',style: textStyle.semiBold16,),
-                              style: ButtonStyle(
-                                backgroundColor: WidgetStateProperty.all<Color>(
-                                  Colors.red,
-                                ),
-                                foregroundColor: WidgetStateProperty.all<Color>(
-                                  Colors.white,
-                              ),
-                                shape: WidgetStateProperty.all<OutlinedBorder>(
-                                  RoundedRectangleBorder(
-                                    borderRadius: BorderRadius.circular(12.r),
-                                  ),
-                                ),
-                              ),
-                              )
-                            ],
-                          ));
-
-                        }, icon: Icon(Icons.ac_unit_sharp))
                       ],
                     ),
                   ),
@@ -274,11 +248,6 @@ class _AddProductViewState extends State<AddProductView> {
           );
         }
         else if (state is AccessTokenExpired) {
-          customSnackBar(
-            context: context,
-            msg: 'Session expired. Please log in again',
-            isError: true,
-          );
           customDialog(context: context,
             title: 'Session Expired',
             content: 'Your session has expired. please log in again',
