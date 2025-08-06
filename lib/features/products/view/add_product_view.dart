@@ -1,15 +1,18 @@
 import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
+import 'package:supabase_flutter/supabase_flutter.dart';
+import 'package:supra_cart_admin/core/helper_function/supabase_storage.dart';
 import 'package:supra_cart_admin/core/widgets/custom_app_bar.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_form.dart';
 import 'package:supra_cart_admin/features/products/view/widget/drop_down.dart';
+import '../../../core/helper_function/get_it_services.dart';
 import '../../../core/helper_function/validators.dart';
 import '../../../core/utilis/constants.dart';
+import '../../../core/utilis/pick_img.dart';
 class AddProductView extends StatefulWidget {
   const AddProductView({super.key});
   static const String routeName = '/addProduct';
@@ -28,7 +31,6 @@ class _AddProductViewState extends State<AddProductView> {
   late AutovalidateMode autovalidateMode =
       AutovalidateMode.disabled;
   File?pickedImage;
-  final ImagePicker picker = ImagePicker();
 
 
   @override
@@ -90,8 +92,13 @@ class _AddProductViewState extends State<AddProductView> {
                               backgroundColor: Colors.black,
                               child: IconButton(
                                 icon: Icon(Icons.camera_alt, size: 20.sp, color: Colors.white),
-                                onPressed: () {
-                                  pickImg();
+                                onPressed: () async{
+                                  SupabaseStorage supa=SupabaseStorage(client: getIt.get<SupabaseClient>());
+                                  pickedImage=await pickImage(picker: getIt.get<ImagePicker>());
+                                  
+                                  setState(() {
+                                  });
+                                  await supa.uploadFile(pickedImage!);
                                 },
                               ),
                             ),
@@ -180,13 +187,5 @@ class _AddProductViewState extends State<AddProductView> {
         ),
       ),
     );
-  }
-  Future<void>pickImg()async{
-    final XFile? image=await picker.pickImage(source: ImageSource.gallery);
-    if(image!=null ){
-      setState(() {
-        pickedImage= File(image.path);
-      });
-    }
   }
 }

@@ -35,6 +35,7 @@ const String authApi="authApi";
 const String adminTable='admin_table';
 const String accessToken='access_token';
 const String adminInfo='admin_info';
+const String bucketName = 'images/products';
 
 
 
