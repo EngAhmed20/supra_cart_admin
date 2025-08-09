@@ -18,4 +18,10 @@ class AddProductFailure extends ProductState {
   final String message;
   AddProductFailure({required this.message});
 }
+class UpdateProductLoading extends ProductState {}
+class UpdateProductSuccess extends ProductState {}
+class UpdateProductFailure extends ProductState {
+  final String message;
+  UpdateProductFailure({required this.message});
+}
 

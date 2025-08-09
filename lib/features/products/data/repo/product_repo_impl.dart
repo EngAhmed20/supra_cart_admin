@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:supra_cart_admin/core/helper_function/base_api_services.dart';
 import 'package:supra_cart_admin/core/helper_function/failure.dart';
@@ -35,6 +37,28 @@ class ProductRepoImpl implements ProductRepo {
       return response.fold((failure)=>Left(Failure(message: failure.message)),(successResponse)=>Right(null));
 
     }catch(e){
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> updateProduct({required ProductModel product, required String token}) async{
+
+    try{
+    final response=await apiServices.patchData(path:productUrl,
+        queryParameters: {
+      'product_id': 'eq.${product.id}',
+        },
+        data: product.toJson(),token: token);
+    return response.fold(
+      (failure)  {
+        log('err from repo1 ${failure.message}');
+
+        return Left(Failure(message: failure.message));},
+      (successResponse) => Right(null),
+    );
+    }catch(e){
+      log('err from repo ${e.toString()}');
       return Left(Failure(message: e.toString()));
     }
   }

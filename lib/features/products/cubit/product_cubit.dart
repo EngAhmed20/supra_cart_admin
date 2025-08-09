@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
@@ -41,6 +40,7 @@ class ProductCubit extends Cubit<ProductState> {
       });
 
   }
+  /// Add product
   Future<void> addProduct(ProductModel product,File img) async {
     emit(AddProductLoading());
     final storage=await  supabaseStorage.uploadFile(img);
@@ -55,7 +55,6 @@ class ProductCubit extends Cubit<ProductState> {
             return;
           }
           emit(AddProductFailure(message: failure.message));
-          print(failure.message);
         },
             (success) {
           productList.add(product);
@@ -66,6 +65,24 @@ class ProductCubit extends Cubit<ProductState> {
         });
 
   }
+ /// update product
+ Future<void>updateProduct(ProductModel product)async{
+    emit(UpdateProductLoading());
+    final result=await productRepo.updateProduct(product: product, token: token!);
+    result.fold(
+      (failure) {
+        if (failure.message.toLowerCase().contains('jwt expired')) {
+          emit(AccessTokenExpired());
+          return;
+        }
+        emit(UpdateProductFailure(message: failure.message));
+      },
+      (success) {
 
+        emit(UpdateProductSuccess());
+      },
+    );
+
+ }
 
 }

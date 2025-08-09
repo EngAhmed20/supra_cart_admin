@@ -53,6 +53,25 @@ class ProductModel {
       'img_url': imageUrl,
     };
   }
+  ProductModel copyWith({
+    String? id,
+    String? name,
+    double? price,
+    double? oldPrice,
+    String? description,
+    String? category,
+    String? imageUrl,
+  }) {
+    return ProductModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      price: price ?? this.price,
+      oldPrice: oldPrice ?? this.oldPrice,
+      description: description ?? this.description,
+      category: category ?? this.category,
+      imageUrl: imageUrl ?? this.imageUrl,
+    );
+  }
 
 
   static double _parseDouble(dynamic value) {
