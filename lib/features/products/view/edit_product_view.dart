@@ -1,9 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supra_cart_admin/core/models/product_model.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
+import 'package:supra_cart_admin/core/utilis/pick_img.dart';
 import 'package:supra_cart_admin/core/widgets/custom_app_bar.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_form.dart';
@@ -37,6 +41,8 @@ class _EditProductViewState extends State<EditProductView> {
       AutovalidateMode.disabled;
   double priceAfterDiscount=0;
   double currentPrice=0;
+  File? pickedImage;
+
   @override
   void initState() {
     productNameController .text = widget.selectedProduct.name;
@@ -78,9 +84,15 @@ class _EditProductViewState extends State<EditProductView> {
                             Stack(
                               clipBehavior: Clip.none,
                               children: [
+                                pickedImage!=null?
+                                    ClipRRect(
+                                      borderRadius: BorderRadius.circular(10.h),
+                                        child: Image.file(pickedImage!,height: 240.h,width: 300.w,fit: BoxFit.contain,))
+
+                                :
                                 ProductPicture(
-                                  height: 120.h,
-                                  width: 240.w,
+                                  height: 240.h,
+                                  width: 300.w,
                                   imgUrl:
                                   widget.selectedProduct.imageUrl,
                                 ),
@@ -92,8 +104,9 @@ class _EditProductViewState extends State<EditProductView> {
                                     backgroundColor: Colors.black,
                                     child: IconButton(
                                       icon: Icon(Icons.camera_alt, size: 20.sp, color: Colors.white),
-                                      onPressed: () {
-                                        // فتح الصور أو الكاميرا لتغيير الصورة
+                                      onPressed: () async{
+                                        pickedImage=await pickImage(picker: getIt.get<ImagePicker>());
+                                        setState(() {});
                                       },
                                     ),
                                   ),
@@ -171,7 +184,7 @@ class _EditProductViewState extends State<EditProductView> {
                                       category: selectedCategory ?? widget.selectedProduct.category,
                                       imageUrl: widget.selectedProduct.imageUrl,
                                     );
-                                    cubit.updateProduct(updatedProduct);
+                                    cubit.updateProduct(product: updatedProduct,img: pickedImage);
                                     print('Product updated successfully');
                                     setState(() {
                                       autovalidateMode = AutovalidateMode.disabled;

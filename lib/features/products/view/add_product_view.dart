@@ -77,24 +77,25 @@ class _AddProductViewState extends State<AddProductView> {
                         Stack(
                           clipBehavior: Clip.none,
                           children: [
+                            pickedImage!=null?
+                            ClipRRect(
+                                borderRadius: BorderRadius.circular(10.h),
+                                child: Image.file(pickedImage!,height: 240.h,width: 300.w,fit: BoxFit.contain,))
+
+                                :
                             CircleAvatar(
                               radius: 44.r,
                               backgroundColor: Colors.blue,
                               child: CircleAvatar(
                                 radius: 40.r,
                                 backgroundColor: Colors.grey[200],
-                                backgroundImage:
-                                    pickedImage != null
-                                        ? FileImage(pickedImage!)
-                                        : null,
                                 child:
-                                    pickedImage == null
-                                        ? Icon(
+                                     Icon(
                                           Icons.camera_alt,
                                           size: 30.sp,
                                           color: Colors.grey,
                                         )
-                                        : null,
+
                               ),
                             ),
                             Positioned(

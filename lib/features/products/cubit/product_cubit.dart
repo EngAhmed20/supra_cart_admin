@@ -26,7 +26,7 @@ class ProductCubit extends Cubit<ProductState> {
 
   }
   Future<void>getAllProducts()async{
-
+    productList.clear();
     emit(GetProductLoading());
     final result=await productRepo.getAllProducts(token);
     result.fold(
@@ -66,8 +66,19 @@ class ProductCubit extends Cubit<ProductState> {
 
   }
  /// update product
- Future<void>updateProduct(ProductModel product)async{
+ Future<void>updateProduct({required ProductModel product, File?img})async{
     emit(UpdateProductLoading());
+    if(img!=null){
+      final storage=await supabaseStorage.replaceFile(oldFileUrl: product.imageUrl, newImage: img);
+      storage.fold(
+        (failure) => emit(UpdateProductFailure(message: failure.message)),
+        (imgUrl) {
+          product = product.copyWith(imageUrl: imgUrl);
+        },
+      );
+      if (state is UpdateProductFailure) return;
+
+    }
     final result=await productRepo.updateProduct(product: product, token: token!);
     result.fold(
       (failure) {

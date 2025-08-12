@@ -31,4 +31,39 @@ class SupabaseStorage implements StorageService{
     }
 
   }
+
+  @override
+  Future<Either<Failure, String>> replaceFile({required String oldFileUrl,
+     required File newImage,})async {
+    try{
+      final bucket=client.storage.from('images');
+      final oldFileName=oldFileUrl.split('/').last;
+      print(oldFileName);
+       await bucket.remove(['products/$oldFileName']);
+
+      final uploadNewImg= await uploadFile(newImage);
+      return uploadNewImg.fold(
+        (failure) => Left(Failure(message: failure.message)),
+        (newFileUrl) => Right(newFileUrl),
+      );
+
+    }catch(e){
+      print("Error replacing file: ${e.toString()}");
+      return Left(Failure(message: "Failed to replace file: ${e.toString()}"));
+    }
+  }
+
+  @override
+  Future<Either<Failure, String>> deleteFile(String fileUrl) async{
+    try{
+      final bucket=client.storage.from(bucketName);
+      final fileName=fileUrl.split('/').last;
+      await bucket.remove(['products/$fileName']);
+      return Right("File deleted successfully");
+
+    }catch(e){
+      return Left(Failure(message: "Failed to delete file: ${e.toString()}"));
+    }
+
+  }
 }
