@@ -13,7 +13,12 @@ class ProductRepoImpl implements ProductRepo {
   ProductRepoImpl({required this.apiServices});
   @override
   Future<Either<Failure, List<ProductModel>>> getAllProducts([String?token]) async{
-   var result=await apiServices.getData(path: productUrl,token: token);
+   var result=await apiServices.getData(path: productUrl,token: token,
+   queryParameters: {
+      'select': '*',
+      'order': 'created_at.desc',
+   }
+   );
    return result.fold((failure)=>Left(Failure(message: failure.message)),(successResponse){
     final data=successResponse as List;
     if(data.isNotEmpty){
@@ -59,6 +64,19 @@ class ProductRepoImpl implements ProductRepo {
     );
     }catch(e){
       log('err from repo ${e.toString()}');
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
+  @override
+  Future<Either<Failure, void>> deleteProduct({required String productId, required String token}) async{
+    try{
+      final response=await apiServices.deleteData(path: productUrl,token: token,queryParameters: {
+        'product_id': 'eq.$productId',
+      });
+      return response.fold((failure)=>Left(Failure(message: failure.message)),(successResponse)=>Right(null));
+
+    }catch(e){
       return Left(Failure(message: e.toString()));
     }
   }

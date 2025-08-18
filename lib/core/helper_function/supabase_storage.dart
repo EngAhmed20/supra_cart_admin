@@ -56,7 +56,7 @@ class SupabaseStorage implements StorageService{
   @override
   Future<Either<Failure, String>> deleteFile(String fileUrl) async{
     try{
-      final bucket=client.storage.from(bucketName);
+      final bucket=client.storage.from('images');
       final fileName=fileUrl.split('/').last;
       await bucket.remove(['products/$fileName']);
       return Right("File deleted successfully");

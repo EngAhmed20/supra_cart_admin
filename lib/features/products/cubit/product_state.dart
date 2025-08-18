@@ -24,4 +24,10 @@ class UpdateProductFailure extends ProductState {
   final String message;
   UpdateProductFailure({required this.message});
 }
+class DeleteProductLoading extends ProductState {}
+class DeleteProductSuccess extends ProductState {}
+class DeleteProductFailure extends ProductState {
+  final String message;
+  DeleteProductFailure({required this.message});
+}
 

@@ -24,7 +24,10 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           children: [
             Row(children: [
-              ProductPicture(imgUrl:productModel.imageUrl,),
+              Padding(
+                padding:  EdgeInsets.symmetric(vertical: 10.h),
+                child: ProductPicture(imgUrl:productModel.imageUrl,),
+              ),
               SizedBox(width: 20.w),
               Expanded(
                 child: Column(
@@ -70,7 +73,7 @@ class ProductCard extends StatelessWidget {
               ),
 
             ),
-            SizedBox(height: 10.h,),
+            SizedBox(height: 20,),
           ],
         )
     );

@@ -81,16 +81,28 @@ class ApiServices extends BaseApiServices{
       return Left(Failure(message: 'Failed to patch data: ${errorMessage}'));
     }
   }
-  Future<Either<Failure, dynamic>>deleteData({required String path,String? token})async{
+  Future<Either<Failure, dynamic>>deleteData({required String path,String? token,Map<String, dynamic>? queryParameters})async{
     try {
-      Response response = await dio.delete(path,options: Options(
+      Response response = await dio.delete(path,queryParameters: queryParameters,options: Options(
           headers: {
             "Authorization":"Bearer $token",
           }
       ));
       return Right(response);
     } on DioException catch (e) {
-      return Left(Failure(message: 'Failed to delete data: ${e.message}'));
+      String errorMessage = 'Unknown error';
+      if(e.response?.data!=null){
+        final responseData=e.response!.data;
+        if(responseData is Map<String,dynamic>){
+          errorMessage=responseData['msg'] ??
+              responseData['message'] ??
+              responseData['error'] ??
+              e.message ??
+              'Failed to delete data';
+        }
+
+      }
+      return Left(Failure(message: 'Failed to delete data: ${errorMessage}'));
     }
   }
 

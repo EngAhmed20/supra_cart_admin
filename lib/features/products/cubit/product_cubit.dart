@@ -95,5 +95,32 @@ class ProductCubit extends Cubit<ProductState> {
     );
 
  }
+ /// remove product
+  Future<void>removeProduct({required String productId,required String productImgUrl})async{
+   emit(DeleteProductLoading());
+   final response=await productRepo.deleteProduct(productId: productId, token: token!);
+   response.fold(
+       (failure){
+         if(failure.message.toLowerCase().contains('jwt expired')){
+            emit(AccessTokenExpired());
+            return;
+         }
+          emit(DeleteProductFailure(message: failure.message));
+
+       },(success)async{
+         final storage=await supabaseStorage.deleteFile(productImgUrl);
+          storage.fold(
+            (failure) => emit(DeleteProductFailure(message: failure.message)),
+            (success) {
+              productList.removeWhere((product) => product.id == productId);
+              emit(DeleteProductSuccess());
+            },
+          );
+
+   }
+   );
+
+  }
+
 
 }

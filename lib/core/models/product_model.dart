@@ -7,6 +7,8 @@ class ProductModel {
   final String description;
   final String category;
   late  String imageUrl;
+  final DateTime? createdAt;
+
 
   num getSale({double?priceBeforeDiscount, double? priceAfterDiscount})  {
     final bool usePassedValues =
@@ -29,6 +31,7 @@ class ProductModel {
     required this.description,
     required this.category,
     required this.imageUrl,
+     this.createdAt,
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
@@ -40,6 +43,8 @@ class ProductModel {
       description: json['description'] ?? '',
       category: json['category'] ?? '',
       imageUrl: json['img_url'] ?? '',
+      createdAt: DateTime.parse(json['created_at']),
+
 
     );
   }
@@ -61,6 +66,7 @@ class ProductModel {
     String? description,
     String? category,
     String? imageUrl,
+    DateTime? createdAt,
   }) {
     return ProductModel(
       id: id ?? this.id,
@@ -70,6 +76,7 @@ class ProductModel {
       description: description ?? this.description,
       category: category ?? this.category,
       imageUrl: imageUrl ?? this.imageUrl,
+      createdAt:createdAt ?? this.createdAt,
     );
   }
 
