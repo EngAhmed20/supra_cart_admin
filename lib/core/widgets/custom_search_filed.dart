@@ -8,6 +8,7 @@ import '../style/app_colors.dart';
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final void Function()? searchAction;
+  final void Function(String)? onChanged;
 
   const CustomSearchField({
     Key? key,
@@ -15,7 +16,7 @@ import '../style/app_colors.dart';
     this.keyboardType = TextInputType.text,
     this.validator,
     this.controller,
-    this.searchAction,
+    this.searchAction, this.onChanged,
   }) : super(key: key);
 
   @override
@@ -29,6 +30,7 @@ import '../style/app_colors.dart';
       controller: controller,
       validator: validator,
       keyboardType: keyboardType,
+      onChanged: onChanged,
       decoration: InputDecoration(
         hintText: hintText,
         border: outlineBorder,

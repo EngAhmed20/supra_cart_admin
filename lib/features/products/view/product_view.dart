@@ -10,7 +10,8 @@ class ProductView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: customAppBar(context, title: 'Products'),
+      appBar: customAppBar(context, title: 'Products',
+      ),
       body: SafeArea(
         child: Padding(
           padding: EdgeInsets.symmetric(horizontal: 10.w, vertical: 15.h),

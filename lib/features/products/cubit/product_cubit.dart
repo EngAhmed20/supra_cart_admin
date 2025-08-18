@@ -17,6 +17,9 @@ class ProductCubit extends Cubit<ProductState> {
   late String? token;
   final ProductRepo productRepo;
   final SharedPreferences sharedPreferences;
+  final TextEditingController searchController = TextEditingController();
+  AutovalidateMode autovalidateMode = AutovalidateMode.disabled;
+
   final StorageService supabaseStorage;
   List <ProductModel> productList = [];
 
@@ -122,5 +125,40 @@ class ProductCubit extends Cubit<ProductState> {
 
   }
 
+// search
+  void searchButton(context,{required GlobalKey<FormState> searchForm}) {
+
+    if (searchForm.currentState!.validate()) {
+      search( searchController.text);
+      autovalidateMode = AutovalidateMode.disabled;
+
+    } else {
+      autovalidateMode = AutovalidateMode.always;
+      emit(AutoValidateState());
+
+    }
+
+  }
+  List<ProductModel> searchResults = [];
+  search(String query){
+    searchResults.clear();
+    emit(GetProductLoading());
+    for(var product in productList){
+      if(product.name.toLowerCase().contains(query.toLowerCase())){
+        searchResults.add(product);
+      }
+      if (searchResults.isEmpty) {
+        emit(GetProductFailure(message: 'No products found'));
+      } else {
+        emit(SearchProductSuccess(searchResults: searchResults));
+      }
+    }
+
+
+  }
+  void clearSearch() {
+    searchResults.clear();
+    emit(ClearSearchState());
+  }
 
 }

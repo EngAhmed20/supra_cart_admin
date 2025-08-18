@@ -30,4 +30,17 @@ class DeleteProductFailure extends ProductState {
   final String message;
   DeleteProductFailure({required this.message});
 }
+class SearchProductLoading extends ProductState {}
+class SearchProductSuccess extends ProductState {
+  final List<ProductModel> searchResults;
+  SearchProductSuccess({required this.searchResults});
+}
+class SearchProductFailure extends ProductState {
+  final String message;
+  SearchProductFailure({required this.message});
+}
+class AutoValidateState extends ProductState {
+
+}
+class ClearSearchState extends ProductState {}
 
