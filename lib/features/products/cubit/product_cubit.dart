@@ -1,9 +1,11 @@
+import 'dart:async';
 import 'dart:io';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:meta/meta.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:supra_cart_admin/core/helper_function/storage_service.dart';
+import 'package:supra_cart_admin/core/models/comments_model.dart';
 import 'package:supra_cart_admin/core/models/product_model.dart';
 import 'package:supra_cart_admin/core/utilis/constants.dart';
 import '../data/repo/product_repo.dart';
@@ -159,6 +161,22 @@ class ProductCubit extends Cubit<ProductState> {
   void clearSearch() {
     searchResults.clear();
     emit(ClearSearchState());
+  }
+  /// get product comments
+  StreamSubscription? _streamSubscription;
+  List<CommentModel>productComments = [];
+  Future<void> getProductComments({required String productId}) async{
+    productComments.clear();
+    emit(GetProductCommentsLoading());
+    _streamSubscription= productRepo.getProductComments(productId: productId).listen((result){
+      result.fold((failure)=>emit(GetProductFailure(message:failure.message)),
+          (comments){
+        productComments= comments;
+        emit(GetProductCommentsSuccess());
+
+          });
+    });
+
   }
 
 }

@@ -77,8 +77,14 @@ class ProductViewBody extends StatelessWidget {
                         ),
                       );
                     },
-                    viewProductFeedbackFun: () {
-                      Navigator.pushNamed(context, CommentsView.routeName);
+                    viewProductFeedbackFun: () async {
+                       await cubit.getProductComments(productId: productToDisplay[index].id!);
+                      Navigator.push(context,
+                          MaterialPageRoute(builder: (_)=>BlocProvider.value(value: context.read<ProductCubit>(),
+                          child: CommentsView(),
+                          ))).then((_){
+                         cubit.getAllProducts();
+                       });
                     },
                     deleteProductFun: () {
                       customDialog(

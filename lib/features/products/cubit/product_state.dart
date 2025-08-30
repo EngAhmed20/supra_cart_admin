@@ -43,4 +43,11 @@ class AutoValidateState extends ProductState {
 
 }
 class ClearSearchState extends ProductState {}
+class GetProductCommentsLoading extends ProductState {}
+class GetProductCommentsSuccess extends ProductState {
+}
+class GetProductCommentsFailure extends ProductState {
+  final String message;
+  GetProductCommentsFailure({required this.message});
+}
 

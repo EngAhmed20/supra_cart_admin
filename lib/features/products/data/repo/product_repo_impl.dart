@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:dartz/dartz.dart';
 import 'package:supra_cart_admin/core/helper_function/base_api_services.dart';
 import 'package:supra_cart_admin/core/helper_function/failure.dart';
+import 'package:supra_cart_admin/core/models/comments_model.dart';
 import 'package:supra_cart_admin/core/models/product_model.dart';
 import 'package:supra_cart_admin/core/utilis/constants.dart';
 import 'package:supra_cart_admin/features/products/data/repo/product_repo.dart';
@@ -79,6 +80,20 @@ class ProductRepoImpl implements ProductRepo {
     }catch(e){
       return Left(Failure(message: e.toString()));
     }
+  }
+
+  @override
+  Stream<Either<Failure, List<CommentModel>>> getProductComments({required String productId}) async*{
+    await for (var data in apiServices.getStreamData(path: 'comments_table', productId: productId,orderBy: 'created_at'))
+    {
+      yield data.fold((failure)=>Left(failure),(data){
+        final commentsList=data as List;
+        final comment=commentsList.map((e)=>CommentModel.fromJson(e as Map<String, dynamic>)).toList();
+        return Right(comment);
+      });
+    }
+
+
   }
 
 

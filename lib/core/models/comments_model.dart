@@ -5,6 +5,7 @@ class CommentModel {
   final String forUser;
   final String forProduct;
   final String comments;
+  final String? reply;
 
   CommentModel({
     required this.id,
@@ -13,6 +14,7 @@ class CommentModel {
     required this.forUser,
     required this.forProduct,
     required this.comments,
+    this.reply,
   });
 
   factory CommentModel.fromJson(Map<String, dynamic> json) {
@@ -23,6 +25,7 @@ class CommentModel {
       forUser: json['for_user'],
       forProduct: json['for_product'],
       comments: json['comments'],
+      reply: json['reply'],
     );
   }
 
@@ -33,6 +36,7 @@ class CommentModel {
       'for_user': forUser,
       'for_product': forProduct,
       'comments': comments,
+      'reply': reply,
     };
   }
 }

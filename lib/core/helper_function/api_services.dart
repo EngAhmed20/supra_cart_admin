@@ -113,31 +113,20 @@ class ApiServices extends BaseApiServices{
     bool descending = false,
     required String productId
   }) async* {
-    try {
-      final query = supabase.client
-          .from(path)
-          .stream(primaryKey: ['id']).eq('for_product',productId);
+  try{
+    final query=supabase.client.from(path).stream(primaryKey: ['id']).eq('for_product',productId);
+    final orderedQuery=orderBy!=null?
+    query.order(orderBy, ascending: !descending):query;
 
-      final orderedQuery = orderBy != null
-          ? query.order(orderBy, ascending: !descending)
-          : query;
-      await for(var event in orderedQuery) {
-        if (event.isNotEmpty) {
-          yield Right(event);
-        } else {
-          yield Left(Failure(message: 'No data found'));
-        }
-      }
+  await for(var event in orderedQuery) {
+    if (event.isNotEmpty){
+      yield Right(event);
+    } else {
+      yield Left(Failure(message: 'No data found'));
+    }
+  }
 
-    /*  yield* orderedQuery.map<Either<Failure, dynamic>>((event) {
-        if (event.isNotEmpty) {
-          return Right(event);
-        } else {
-          return Left(Failure(message: 'No data found'));
-        }
-      }).handleError((error) {
 
-      });*/
     } catch (e) {
       log(e.toString());
       yield Left(Failure(message: 'Exception: ${e.toString()}'));
