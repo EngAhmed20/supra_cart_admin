@@ -96,5 +96,23 @@ class ProductRepoImpl implements ProductRepo {
 
   }
 
+  @override
+  Future<Either<Failure, void>> addReply({required String commentId, required String reply}) async{
+    try{
+      final response=await apiServices.patchData(path: 'comments_table',queryParameters: {
+        'id': 'eq.$commentId',
+      },
+      data: {
+        'reply': reply,
+      }
+      );
+      return response.fold((failure)=>Left(Failure(message: failure.message)),(successResponse)=>Right(null));
+
+    }catch(e)
+    {
+      return Left(Failure(message: e.toString()));
+    }
+  }
+
 
 }

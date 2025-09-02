@@ -178,5 +178,21 @@ class ProductCubit extends Cubit<ProductState> {
     });
 
   }
+  /// add reply to comment
+ Future<void>addReply({required String reply,required String commentId})
+ async{
+    emit(AddReplyLoading());
+    final result=await productRepo.addReply(commentId: commentId, reply: reply);
+    result.fold(
+      (failure){
+        print(failure.message);
+        emit(AddReplyFailure(message: failure.message));
+      },
+      (success) {
+        emit(AddReplySuccess());
+      },
+    );
+
+ }
 
 }

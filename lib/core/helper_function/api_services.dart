@@ -62,7 +62,8 @@ class ApiServices extends BaseApiServices{
     try {
       Response response = await dio.patch(path, data: data,queryParameters:queryParameters,options: Options(
           headers: {
-            "Authorization":"Bearer $token",
+            if (token != null && token.isNotEmpty)
+                "Authorization":"Bearer $token",
           }
       ));
       return Right(response);

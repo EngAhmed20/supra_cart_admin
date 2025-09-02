@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:supra_cart_admin/core/style/app_text_styles.dart';
+import 'package:supra_cart_admin/core/widgets/custom_snack_bar.dart';
 import 'package:supra_cart_admin/core/widgets/loadibg_ink_drop.dart';
 import 'package:supra_cart_admin/features/products/cubit/product_cubit.dart';
 import 'package:supra_cart_admin/features/products/view/widget/comment_list.dart';
@@ -30,6 +31,17 @@ class CommentsView extends StatelessWidget {
 
        },
         listener: (context,state){
+          if (state is AddReplyFailure) {
+            customSnackBar(
+              context: context,
+              msg: 'Failed to send reply: ${state.message}',
+            );
+          } else if (state is AddReplySuccess) {
+            customSnackBar(
+              context: context,
+              msg: 'Reply sent successfully',isError: false
+            );
+          }
 
         },
       )

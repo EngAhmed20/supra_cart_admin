@@ -50,4 +50,10 @@ class GetProductCommentsFailure extends ProductState {
   final String message;
   GetProductCommentsFailure({required this.message});
 }
+class AddReplyLoading extends ProductState {}
+class AddReplySuccess extends ProductState {}
+class AddReplyFailure extends ProductState {
+  final String message;
+  AddReplyFailure({required this.message});
+}
 

@@ -10,6 +10,8 @@ abstract class ProductRepo{
   Future<Either<Failure, void>> updateProduct({required ProductModel product,required String token});
   Future<Either<Failure, void>> deleteProduct({required String productId, required String token});
   Stream<Either<Failure,List<CommentModel>>> getProductComments({required String productId});
+  Future<Either<Failure,void>> addReply({required String commentId,required String reply});
+
 
 
 }
