@@ -17,10 +17,10 @@ class OrdersPageView extends StatelessWidget {
   }
   List<Widget>ordersPagesList({required OrdersCubit cubit}){
     return[
-      OrdersListView(ordersList: cubit.ordersList,),
-      OrdersListView(text: 'Shipped', ordersList: cubit.ordersList,),
-      OrdersListView(text: 'Delivered', ordersList: cubit.ordersList,),
-      OrdersListView(showButton: false, ordersList: cubit.ordersList,),
+      OrdersListView(ordersList: cubit.pendingOrders,cubit: cubit,),
+      OrdersListView(text: 'Ship Order', ordersList: cubit.processingOrders,cubit: cubit,),
+      OrdersListView(text: 'Mark as Delivered', ordersList: cubit.shippedOrders,cubit: cubit,),
+      OrdersListView(showButton: false, ordersList: cubit.deliveredOrders,cubit: cubit,),
     ];
   }
 }

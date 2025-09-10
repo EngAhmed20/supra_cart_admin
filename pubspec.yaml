@@ -26,7 +26,7 @@ dependencies:
   flutter_svg:
   flutter_bloc: ^9.1.1
   file_picker: ^10.2.1
-
+  conditional_builder_null_safety:
 dev_dependencies:
   flutter_test:
     sdk: flutter

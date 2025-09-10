@@ -5,13 +5,16 @@ import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../../core/widgets/product_img.dart';
+import '../../cubit/orders_cubit.dart';
 class OrderItem extends StatelessWidget {
   const OrderItem({
-    super.key,this.text,this.showButton=true, required this.model,
+    super.key,this.text,this.showButton=true, required this.model, required this.cubit,
   });
 final String? text;
 final bool? showButton;
 final PurchaseWithRelations model;
+  final OrdersCubit cubit;
+
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -59,7 +62,7 @@ final PurchaseWithRelations model;
             Text('${model.product.price} \EGP ', style: textStyle.Bold16),
             SizedBox(height: 10.h),
             if(showButton==true)
-               CustomTextButton(onPressed: (){},text: model.purchase.orderStatus,style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
+               CustomTextButton(onPressed: (){},text:text??'Process Order',style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
             SizedBox(height: 10.h,),
           ],
         )
