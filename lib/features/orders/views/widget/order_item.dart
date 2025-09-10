@@ -1,15 +1,17 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:supra_cart_admin/core/models/purchase_with_product_model.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import '../../../../core/style/app_colors.dart';
 import '../../../../core/style/app_text_styles.dart';
 import '../../../../core/widgets/product_img.dart';
 class OrderItem extends StatelessWidget {
   const OrderItem({
-    super.key,this.text,this.showButton=true,
+    super.key,this.text,this.showButton=true, required this.model,
   });
 final String? text;
 final bool? showButton;
+final PurchaseWithRelations model;
   @override
   Widget build(BuildContext context) {
     return Card(
@@ -21,9 +23,9 @@ final bool? showButton;
         child: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            Text('lenovo', style: textStyle.Bold20),
+            Text(model.product.name, style: textStyle.Bold20),
             Row(children: [
-              ProductPicture(imgUrl:'https://img.freepik.com/free-photo/3d-rendering-cartoon-shopping-cart_23-2151680638.jpg?ga=GA1.1.220289254.1670056954&semt=ais_hybrid&w=740',),
+              ProductPicture(imgUrl:model.product.imageUrl,),
               SizedBox(width: 20.w),
               Expanded(
                 child: Column(
@@ -31,11 +33,22 @@ final bool? showButton;
                   children: [
                     Text('RecipientIn formation:', style: textStyle.Bold18,),
                     SizedBox(height: 10.h),
-                    Text('Name: Ahmed Mohamed', style: textStyle.regular16),
+                    Text('Name:${model.userModel.name}', style: textStyle.regular16),
                     SizedBox(height: 5.h),
-                    Text('Address: 123 Main St, Cairo', style: textStyle.regular16),
-                    SizedBox(height: 5.h),
-                    Text('Phone: +20 123 456 7890', style: textStyle.regular16),
+                    if (model.deliveryInfoModel.isNotEmpty) ...[
+                      Text(
+                        'Address: '
+                            '${model.deliveryInfoModel.first.additionalInfo ?? ''}, '
+                            '${model.deliveryInfoModel.first.city}, '
+                            '${model.deliveryInfoModel.first.governorate}',
+                        style: textStyle.regular16,
+                      ),
+                      SizedBox(height: 5.h),
+                      Text('Phone: ${model.deliveryInfoModel.first.mobilePhone}', style: textStyle.regular16),
+                    ]
+                    else ...[
+                      Text('No delivery info available', style: textStyle.regular16),
+                    ],
 
                   ],
                 ),
@@ -43,10 +56,10 @@ final bool? showButton;
 
             ],),
             SizedBox(height: 10.h),
-            Text('200 \EGP ', style: textStyle.Bold16),
+            Text('${model.product.price} \EGP ', style: textStyle.Bold16),
             SizedBox(height: 10.h),
             if(showButton==true)
-               CustomTextButton(onPressed: (){},text: text??'Preparing Order',style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
+               CustomTextButton(onPressed: (){},text: model.purchase.orderStatus,style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
             SizedBox(height: 10.h,),
           ],
         )

@@ -11,6 +11,8 @@ import 'package:supra_cart_admin/core/repo/admin_info_repo.dart';
 import 'package:supra_cart_admin/core/repo/admin_info_repo_impl.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo.dart';
 import 'package:supra_cart_admin/features/admin/data/repo/admin_auth_repo_impl.dart';
+import 'package:supra_cart_admin/features/orders/data/repo/order_repo.dart';
+import 'package:supra_cart_admin/features/orders/data/repo/order_repo_impl.dart';
 import 'package:supra_cart_admin/features/products/data/repo/product_repo.dart';
 import 'package:supra_cart_admin/features/products/data/repo/product_repo_impl.dart';
 import '../secret_data.dart';
@@ -44,9 +46,9 @@ class ServicesLoacator {
     ),instanceName:authDio);
     // API Service
     getIt.registerLazySingleton<AdminAuthRepo>(()=>AdminAuthRepoImpl(baseApiServices:getIt.get<BaseApiServices>(instanceName: authApi)));
-
     getIt.registerLazySingleton<AdminInfoRepo>(()=>AdminInfoRepoImp(apiServices: getIt.get<BaseApiServices>()));
     getIt.registerLazySingleton<ProductRepo>(()=>ProductRepoImpl(apiServices: getIt.get<BaseApiServices>()));
+    getIt.registerLazySingleton<OrderRepo>(()=>OrderRepoImpl(apiServices: getIt.get<BaseApiServices>()));
 
   }
 }

@@ -6,6 +6,8 @@ import 'package:supra_cart_admin/core/utilis/constants.dart';
 import 'package:supra_cart_admin/core/widgets/custom_text_button.dart';
 import 'package:supra_cart_admin/features/admin/view/add_admin_view.dart';
 import 'package:supra_cart_admin/features/home/cubit/home_cubit.dart';
+import 'package:supra_cart_admin/features/orders/cubit/orders_cubit.dart';
+import 'package:supra_cart_admin/features/orders/data/repo/order_repo.dart';
 import 'package:supra_cart_admin/features/products/view/add_product_view.dart';
 
 import '../../../../core/helper_function/get_it_services.dart';
@@ -39,7 +41,11 @@ class HomeViewBody extends StatelessWidget {
                 SizedBox(height: 15.h),
                 CustomTextButton(text: 'Orders', onPressed: () {
                   // Navigate to Orders view
-                  Navigator.pushNamed(context, OrdersView.routeName);
+                  Navigator.push(context, MaterialPageRoute(builder: (context)=>
+                      BlocProvider(create:(context)=>OrdersCubit(getIt.get<OrderRepo>())..getAllOrders(),
+                      child: OrdersView(),)
+
+                  ));
                 }),
                 SizedBox(height: 15.h),
                 CustomTextButton(text: 'Add Products', onPressed: () {

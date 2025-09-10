@@ -1,34 +1,33 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supra_cart_admin/features/orders/cubit/orders_cubit.dart';
 import 'package:supra_cart_admin/features/orders/views/widget/orders_page_view.dart';
 import 'order_type_title_list.dart';
-class OrdersViewBody extends StatefulWidget {
+class OrdersViewBody extends StatelessWidget {
   const OrdersViewBody({super.key});
 
-  @override
-  State<OrdersViewBody> createState() => _OrdersViewBodyState();
-}
 
-class _OrdersViewBodyState extends State<OrdersViewBody> {
-  int currentPageIndex = 0;
-  PageController pageController= PageController(initialPage: 0);
   @override
   Widget build(BuildContext context) {
-    return CustomScrollView(
-      slivers: [
-        SliverToBoxAdapter(
-          child: OrdersTypeList(currentPageIndex: currentPageIndex,onOrderTypeSelected: (val){
-            currentPageIndex=val;
-            pageController.jumpToPage(val);
-            setState(() {
+    return BlocConsumer<OrdersCubit,OrdersState>(
+      builder: (BuildContext context, OrdersState state) {
+        var cubit=context.watch<OrdersCubit>();
+        return CustomScrollView(
+          slivers: [
+            SliverToBoxAdapter(
+              child: OrdersTypeList(currentPageIndex: cubit.currentPageIndex,onOrderTypeSelected: (val){
+                cubit.onTapOnOrderType(val);
+              },),
+            ),
+            SliverFillRemaining(
+              child: OrdersPageView(pageController: cubit.pageController,cubit: cubit,),
+            ),
 
-            });
-          },),
-        ),
-        SliverFillRemaining(
-         child: OrdersPageView(pageController: pageController,),
-       ),
+          ],
+        );
+      },
+      listener: (BuildContext context, OrdersState state) {  },
 
-      ],
     );
   }
 }
