@@ -20,3 +20,4 @@ class GetOrdersFailure extends OrdersState {
   GetOrdersFailure({required this.message});
 }
 class OnTapOnOrderTypeState extends OrdersState {}
+

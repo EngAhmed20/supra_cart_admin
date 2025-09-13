@@ -62,7 +62,9 @@ final PurchaseWithRelations model;
             Text('${model.product.price} \EGP ', style: textStyle.Bold16),
             SizedBox(height: 10.h),
             if(showButton==true)
-               CustomTextButton(onPressed: (){},text:text??'Process Order',style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
+               CustomTextButton(onPressed: (){
+                  cubit.updateOrderStatusButton(orderId: model.purchase.id!);
+               },text:text??'Process Order',style: textStyle.Bold19.copyWith(color: AppColors.kWhiteColor),),
             SizedBox(height: 10.h,),
           ],
         )

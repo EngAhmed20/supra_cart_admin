@@ -42,6 +42,28 @@ class OrdersCubit extends Cubit<OrdersState> {
       emit(GetOrdersSuccess(orders: orders));
     });
   }
+  ///update status
+  Future<void> updateOrderStatusButton({required String orderId})async{
+    if(currentPageIndex==0){
+      await updateOrderStatus(status: orderStatusList[1], orderId: orderId);
+    }
+    else if(currentPageIndex==1){
+      await updateOrderStatus(status: orderStatusList[2], orderId: orderId);
+    }
+    else if(currentPageIndex==2){
+      await updateOrderStatus(status: orderStatusList[3], orderId: orderId);
+    }
+
+}
+  Future<void>updateOrderStatus({required String status,required String orderId})async{
+    emit(UpdateOrderStatusLoading());
+    final response=await orderRepo.updateOrderStatus(orderId: orderId, status: status);
+    response.fold((failure)=>emit(UpdateOrderStatusFailure(message: failure.message)),
+            (success)async{
+     await getAllOrders();
+     emit(UpdateOrderStatusSuccess());
+            });
+  }
   void clearOrdersList(){
     ordersList.clear();
     pendingOrders.clear();

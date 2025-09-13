@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:supra_cart_admin/core/widgets/custom_snack_bar.dart';
 import 'package:supra_cart_admin/features/orders/cubit/orders_cubit.dart';
 import 'package:supra_cart_admin/features/orders/views/widget/orders_page_view.dart';
 import '../../../../core/style/app_text_styles.dart';
@@ -34,7 +35,16 @@ class OrdersViewBody extends StatelessWidget {
           ],
         );
       },
-      listener: (BuildContext context, OrdersState state) {  },
+      listener: (BuildContext context, OrdersState state) {
+        if(state is UpdateOrderStatusFailure){
+          customSnackBar(context: context, msg: state.message);
+        }
+
+        if(state is UpdateOrderStatusSuccess){
+          customSnackBar(context: context, msg: 'Order Status Updated Successfully',isError: false);
+        }
+      },
+
 
     );
   }
